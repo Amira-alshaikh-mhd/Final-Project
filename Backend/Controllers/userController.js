@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../Models/usermodel');
+const User = require('../Models/userModel');
 
 const register = async (req, res) => {
   try {
@@ -135,7 +135,30 @@ const login = async (req, res) => {
       res.status(500).send('Server Error');
     }
   };
+
+
+  const createAdmin = async (req, res) => {
+    try {
+      const { name, email, password, phone } = req.body;
+      const superadmin = await User.findById(req.user.id);
+  
+      // Check if the current user is a super admin
+      if (superadmin.role !== 'superadmin') {
+        return res.status(403).json({ message: 'You are not authorized to create admin accounts' });
+      }
+  
+      // Create the new admin user
+      const admin = new User({ name, email, password, role: 'admin', phone });
+      await admin.save();
+  
+      res.status(201).json({ message: 'Admin account created successfully', user: admin });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  };
+  
   
   
 
-module.exports = { register, login,getAllUsers,getUserById,logout,deleteUser };
+module.exports = { register, login,getAllUsers,getUserById,logout,deleteUser,createAdmin };

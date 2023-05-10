@@ -19,6 +19,8 @@ app.use(express.urlencoded({extended:true}));
 
 
 app.use('/user',require("./Routes/userRoute"))
+app.use('/country', require('./Routes/countryRoute'))
+
 
 
 
