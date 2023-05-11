@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const { Schema, model } = mongoose;
+
 
 const CitySchema =new mongoose.Schema({
     name:{
@@ -21,6 +23,12 @@ const CitySchema =new mongoose.Schema({
            required: true,
         }
       },
+
+      country:{
+        type:Schema.Types.ObjectId,
+        ref:"countries",
+        required:[true, "Please include a Country"]
+    }
 },
 
     {

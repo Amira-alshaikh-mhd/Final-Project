@@ -1,6 +1,6 @@
 const express =require('express')
 const router = express.Router()
-const {getContries, getCountryById, setcountry }= require('../Controllers/countryController')
+const {getContries, getCountryById, setcountry,updateCountry, deleteCountry  }= require('../Controllers/countryController')
 const countupload=require("../Middleware/countuploader");
 
 router.get('/', getContries)
@@ -12,9 +12,9 @@ router.post('/', countupload.single('image'),setcountry)
 
 
 
-// router.put('/:id', updateCategory)
+router.put('/:id', countupload.single('image'),updateCountry)
 
 
-// router.delete('/:id', deleteCategory)
+router.delete('/:id', deleteCountry)
 
 module.exports = router
