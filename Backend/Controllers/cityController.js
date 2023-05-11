@@ -21,9 +21,7 @@ const getCities = async (req, res) => {
       }
 
 
-//   const cities = await cityModel.find();
 
-//   res.status(200).json(cities);
 };
 
 //get by Id
@@ -103,8 +101,8 @@ const setCity = async (req, res) => {
 // Update city
 
 const updateCity = async (req, res) => {
-  const id  = req.params.id; // Assuming the country ID is passed as a URL parameter
-  const  name  = req.body.name; // Assuming you want to update the name and image fields
+  const id  = req.params.id; 
+  const  name  = req.body.name; 
   const Describtion =req.body.Describtion;
     const image = await cloudinary.uploader.upload(req.file.path);
     
@@ -146,7 +144,7 @@ if (!city){
     res.status(400)
     throw new Error('city not found')
 }
- await cityModel.deleteOne()
+ await cityModel.deleteOne();
     res.status(200).json({id: req.params.id})
 }
 
