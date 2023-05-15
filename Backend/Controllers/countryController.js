@@ -36,6 +36,7 @@ const setcountry = async (req, res) => {
     } else {
       const country = await countryModel.create({
         name: req.body.name,
+        userId: req.body.userId,
 
         image: {
           public_id: result.public_id,
@@ -53,8 +54,9 @@ const setcountry = async (req, res) => {
 
 
 const updateCountry = async (req, res) => {
-  const id  = req.params.id; // Assuming the country ID is passed as a URL parameter
-  const  name  = req.body.name; // Assuming you want to update the name and image fields
+  const id  = req.params.id; 
+  const  name  = req.body.name; 
+  const userId = req.body.userId;
     const image = await cloudinary.uploader.upload(req.file.path);
     
   
@@ -62,7 +64,7 @@ try{
   
     const updatedCountry = await countryModel.findByIdAndUpdate(
       id,
-      { name,
+      { name,userId,
      image: {
         public_id: image.public_id,
         url: image.secure_url,

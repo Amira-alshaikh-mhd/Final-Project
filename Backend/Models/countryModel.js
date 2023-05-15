@@ -1,9 +1,17 @@
 const mongoose = require("mongoose");
+const { Schema, model } = mongoose;
+
 
 const CountrySchema =new mongoose.Schema({
     name:{
         type:String,
         required:true,
+    },
+      
+    userId:{
+        type: Schema.Types.ObjectId,
+        ref: "users",
+        required: [true, "Please include a user"],
     },
    
     image: {

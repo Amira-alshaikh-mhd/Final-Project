@@ -7,10 +7,16 @@ router.post('/register', userController.register);
 
 // Login user
 router.post('/login', userController.login);
+
+// create Admin
+router.post('/Admin', userController.createAdmin);
+
+
+
 // Logout user
 router.get('/logout', userController.logout);
 
-// Get all users
+// Get all userss
 router.get('/', userController.getAllUsers);
 
 // Get user by ID

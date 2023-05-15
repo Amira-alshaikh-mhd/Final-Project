@@ -1,4 +1,4 @@
-const countryModel = require("../Models/countryModel");
+const country = require("../Models/countryModel");
 const cityModel = require ("../Models/cityModel")
 const cloudinary = require("cloudinary").v2;
 const path = require("path");
@@ -27,7 +27,7 @@ const getCities = async (req, res) => {
 //get by Id
 const getCityById = async (req, res) => {
   try {
-    const city = await cityModel.findById(req.params.id).populate("category");
+    const city = await cityModel.findById(req.params.id).populate("country");
     if (!city) {
       return res.status(404).send();
     }

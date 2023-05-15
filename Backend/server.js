@@ -23,6 +23,9 @@ app.use('/country', require('./Routes/countryRoute'))
 app.use('/city', require('./Routes/cityRoute'))
 app.use('/type', require('./Routes/typeRoute'))
 app.use('/place', require('./Routes/placeRoute'))
+app.use('/book', require('./Routes/bookRoute'))
+app.use('/host', require('./Routes/hostRoute'))
+app.use('/review', require('./Routes/reviewRoute'))
 
 
 
