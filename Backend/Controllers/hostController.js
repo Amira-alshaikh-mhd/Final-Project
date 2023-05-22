@@ -33,6 +33,27 @@ const getHostById = async (req, res) => {
   }
 };
 
+
+
+
+
+const  getbyCity = async (req, res) => {
+  try{
+  const Id = req.params.id
+  // console.log(Id)
+
+  const host = await hostModel.find({cityId: Id }).populate("cityId");
+
+  res.status(200).json(host);
+  }
+  catch(err){
+  res.json({ message: err });
+  }
+  };
+
+
+
+
 const setHost = async (req, res) => {
   try {
 
@@ -180,6 +201,7 @@ const deleteHost = async (req, res) => {
 module.exports = {
 getHosts,
 getHostById,
+getbyCity,
 setHost,
 login,
 logout,
