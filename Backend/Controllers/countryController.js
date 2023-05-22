@@ -36,7 +36,6 @@ const setcountry = async (req, res) => {
     } else {
       const country = await countryModel.create({
         name: req.body.name,
-        userId: req.body.userId,
 
         image: {
           public_id: result.public_id,
@@ -56,7 +55,7 @@ const setcountry = async (req, res) => {
 const updateCountry = async (req, res) => {
   const id  = req.params.id; 
   const  name  = req.body.name; 
-  const userId = req.body.userId;
+  
     const image = await cloudinary.uploader.upload(req.file.path);
     
   
@@ -64,7 +63,7 @@ try{
   
     const updatedCountry = await countryModel.findByIdAndUpdate(
       id,
-      { name,userId,
+      { name,
      image: {
         public_id: image.public_id,
         url: image.secure_url,
@@ -114,13 +113,13 @@ try{
 
 
 const deleteCountry =  async(req, res) => {
-    const country =await countryModel.findById(req.params.id)
+    const country =await countryModel.findByIdAndDelete(req.params.id)
 
 if (!country){
     res.status(400)
     throw new Error('country not found')
 }
- await countryModel.deleteOne()
+//  await countryModel.deleteOne({id: req.params.id})
     res.status(200).json({id: req.params.id})
 }
 

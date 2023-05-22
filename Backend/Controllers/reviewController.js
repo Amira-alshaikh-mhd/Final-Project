@@ -192,13 +192,13 @@ try{
 // Delete 
 
 const deleteReview =  async(req, res) => {
-    const review =await reviewModel.findById(req.params.id)
+    const review =await reviewModel.findByIdAndDelete(req.params.id)
 
 if (!review){
     res.status(400)
     throw new Error('review not found')
 }
- await reviewModel.deleteOne({ _id: req.params.id });
+
     res.status(200).json({id: req.params.id})
 }
 

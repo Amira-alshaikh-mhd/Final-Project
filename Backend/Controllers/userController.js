@@ -75,6 +75,7 @@ const login = async (req, res) => {
 
   // Function to get all users
   const getAllUsers = async (req, res) => {
+   
     try {
       const users = await User.find();
       res.status(200).json(users);
@@ -114,7 +115,7 @@ const login = async (req, res) => {
 
   const deleteUser = async (req, res) => {
     try {
-      const user = await User.findById(req.params.id);
+      const user = await User.findByIdAndDelete(req.params.id);
   
       // Check if user exists
       if (!user) {
@@ -122,12 +123,12 @@ const login = async (req, res) => {
       }
   
       // Check if user is an admin or superadmin
-      if (user.role === 'admin' || user.role === 'superadmin') {
-        return res.status(401).json({ msg: 'Unauthorized' });
-      }
+      // if (user.role === 'admin' || user.role === 'superadmin') {
+      //   return res.status(401).json({ msg: 'Unauthorized' });
+      // }
   
       // Remove user from database
-      await user.deleteOne();
+      
   
       res.status(200).json({ msg: 'User deleted successfully' });
     } catch (err) {
@@ -140,12 +141,12 @@ const login = async (req, res) => {
   const createAdmin = async (req, res) => {
     try {
       const { name, email, password, phone } = req.body;
-      const superadmin = await User.findById(req.user.id);
+      // const superadmin = await User.findById(req.user.id);
   
       // Check if the current user is a super admin
-      if (superadmin.role !== 'superadmin') {
-        return res.status(403).json({ message: 'You are not authorized to create admin accounts' });
-      }
+      // if (superadmin.role !== 'superadmin') {
+        // return res.status(403).json({ message: 'You are not authorized to create admin accounts' });
+      // }
   
       // Create the new admin user
       const admin = new User({ name, email, password, role: 'admin', phone });

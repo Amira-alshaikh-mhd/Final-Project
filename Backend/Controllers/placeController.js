@@ -40,6 +40,65 @@ const getPlaceById = async (req, res) => {
 
 
 
+
+// placeController.js
+
+// ...
+
+const getPlacesByCountry = async (req, res) => {
+  try {
+    const countryId = req.params.countryId;
+    
+    // Find cities by country ID
+    const cities = await cityModel.find({ country: countryId });
+
+    // Extract city IDs
+    const cityIds = cities.map((city) => city._id);
+
+    // Find places by city IDs
+    const places = await PlaceModel.find({ cityId: { $in: cityIds } })
+      .populate("cityId")
+      .populate("typeId");
+
+    res.status(200).json(places);
+  } catch (err) {
+    res.status(500).json({ message: err });
+  }
+};
+
+async function getPlacesByCityAndType(cityId, typeId, res) {
+  try {
+    const places = await PlaceModel.find({ cityId, typeId });
+    res.json(places);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to get places' });
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const getPlacesByCityName = async (req, res) => {
     try {
        const cityName = req.params.cityName;
@@ -123,7 +182,7 @@ const setplace = async (req, res) => {
     } else {
       const place = await PlaceModel.create({
         name: req.body.name,
-        Describtion: req.body.Describtion,
+        Description: req.body.Description,
         Address : req.body.Address,
         rating : req.body.rating,
         cityId : req.body.cityId,
@@ -151,7 +210,7 @@ const setplace = async (req, res) => {
 const updatePlace = async (req, res) => {
   const id  = req.params.id; 
   const  name  = req.body.name; 
-  const Describtion =req.body.Describtion;
+  const Description =req.body.Description;
   const Address = req.body.Address;
   const rating = req.body.rating;
     // const image = await cloudinary.uploader.upload(req.file.path);
@@ -172,7 +231,7 @@ try{
     const updatedPlace = await PlaceModel.findByIdAndUpdate(
       id,
       { name,
-        Describtion,
+        Description,
         Address,
         rating,
         image: images,
@@ -198,13 +257,13 @@ try{
 // Delete place
 
 const deletePlace =  async(req, res) => {
-    const place =await PlaceModel.findById(req.params.id)
+    const place =await PlaceModel.findByIdAndDelete(req.params.id)
 
 if (!place){
     res.status(400)
     throw new Error('place not found')
 }
- await PlaceModel.deleteOne({ _id: req.params.id });
+
     res.status(200).json({id: req.params.id})
 }
 
@@ -213,7 +272,13 @@ module.exports = {
   getPlaceById,
   getPlacesByCityName,
   getPlacesByTypeName,
+  getPlacesByCountry,
+  getPlacesByCityAndType,
   setplace,
   updatePlace,
   deletePlace,
 };
+
+
+
+

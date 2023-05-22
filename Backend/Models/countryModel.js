@@ -7,12 +7,6 @@ const CountrySchema =new mongoose.Schema({
         type:String,
         required:true,
     },
-      
-    userId:{
-        type: Schema.Types.ObjectId,
-        ref: "users",
-        required: [true, "Please include a user"],
-    },
    
     image: {
         public_id:{

@@ -50,7 +50,7 @@ const setHost = async (req, res) => {
         phone: req.body.phone,
         email: req.body.email,
         password: hashedPassword,
-        Describtion: req.body.Describtion,
+        Description: req.body.Description,
         price: req.body.price,
         cityId: req.body.cityId,
 
@@ -138,7 +138,7 @@ const updateHost = async (req, res) => {
   const phone = req.body.phone;
   const email = req.body.email;
   const password = req.body.password;
-  const Describtion = req.body.Describtion;
+  const Description = req.body.Description;
   const price = req.body.price;
   const cityId = req.body.cityId;
   const image = await cloudinary.uploader.upload(req.file.path);
@@ -147,7 +147,7 @@ const updateHost = async (req, res) => {
     const updatedHost = await hostModel.findByIdAndUpdate(
       id,
       {
-        name,phone,Describtion,price,cityId,email,password,
+        name,phone,Description,price,cityId,email,password,
         image: {
           public_id: image.public_id,
           url: image.secure_url,
@@ -167,13 +167,13 @@ const updateHost = async (req, res) => {
 };
 
 const deleteHost = async (req, res) => {
-  const host = await hostModel.findById(req.params.id);
+  const host = await hostModel.findByIdAndDelete(req.params.id);
 
   if (!host) {
     res.status(400);
     throw new Error("Host not found");
   }
-  await hostModel.deleteOne({ id: req.params.id });
+  
   res.status(200).json({ id: req.params.id });
 };
 

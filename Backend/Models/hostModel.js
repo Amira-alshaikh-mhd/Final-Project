@@ -21,7 +21,7 @@ const HostSchema = new mongoose.Schema(
       required: true,
     },
 
-    Describtion: {
+    Description: {
       type: String,
       required: true,
     },

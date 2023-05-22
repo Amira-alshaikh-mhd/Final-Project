@@ -154,13 +154,13 @@ try{
 
 
 const deleteBook =  async(req, res) => {
-    const book =await bookModel.findById(req.params.id)
+    const book =await bookModel.findByIdAndDelete(req.params.id)
 
 if (!book){
     res.status(400)
     throw new Error('book not found')
 }
- await bookModel.deleteOne({ _id: req.params.id })
+
     res.status(200).json({id: req.params.id})
 }
 

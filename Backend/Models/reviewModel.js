@@ -25,7 +25,7 @@ const ReviewSchema = new mongoose.Schema(
     userId: {
       type: Schema.Types.ObjectId,
       ref: "users",
-      required: [true, "Please include a user"],
+      // required: [true, "Please include a user"],
     },
 
     hostId: {

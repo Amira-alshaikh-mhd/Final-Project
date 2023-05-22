@@ -72,13 +72,13 @@ try{
 
 
 const deleteType =  async(req, res) => {
-    const type =await typeModel.findById(req.params.id)
+    const type =await typeModel.findByIdAndDelete(req.params.id)
 
 if (!type){
     res.status(400)
     throw new Error('type not found')
 }
- await typeModel.deleteOne({ _id: req.params.id })
+ 
     res.status(200).json({id: req.params.id})
 }
 

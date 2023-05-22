@@ -38,10 +38,30 @@ const getCityById = async (req, res) => {
 };
 
 
+const getCityByCountry = async (req, res) => {
+  try{
+  const {id } = req.params
+  console.log(id)
+
+  const city = await cityModel.findOne({ country: id }).populate("country");
+
+  res.status(200).json(city);
+  }
+  catch(err){
+  res.json({ message: err });
+  }
+  };
+
+
+
+
+
 
 const getCitiesByCountryName = async (req, res) => {
     try {
        const countryName = req.params.countryName;
+      //  console.log(req.params.countryName)
+
        const city = await cityModel.aggregate([
          {
            $lookup: {
@@ -138,13 +158,13 @@ try{
 // Delete city
 
 const deleteCity =  async(req, res) => {
-    const city =await cityModel.findById(req.params.id)
+    const city =await cityModel.findByIdAndDelete(req.params.id)
 
 if (!city){
     res.status(400)
     throw new Error('city not found')
 }
- await cityModel.deleteOne();
+
     res.status(200).json({id: req.params.id})
 }
 
@@ -152,6 +172,7 @@ module.exports = {
   getCities,
   getCityById,
   getCitiesByCountryName,
+  getCityByCountry,
   setCity,
   updateCity,
   deleteCity,
