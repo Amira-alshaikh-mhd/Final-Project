@@ -12,7 +12,7 @@ router.get("/bookByUserName/:userName", getBooksByUserName);
 
 
 
-router.get("/bookByHostName/:hostName", getBooksByHostName);
+router.get("/bookByHost/:id", getBooksByHostName);
 
 
 

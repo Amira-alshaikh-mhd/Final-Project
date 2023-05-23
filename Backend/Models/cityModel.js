@@ -7,7 +7,7 @@ const CitySchema =new mongoose.Schema({
         type:String,
         required:true,
     },
-    Describtion:{
+    Description:{
         type:String,
         required:true,
 

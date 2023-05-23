@@ -97,7 +97,7 @@ const setCity = async (req, res) => {
     } else {
       const city = await cityModel.create({
         name: req.body.name,
-        Describtion: req.body.Describtion,
+        Description: req.body.Description,
         country : req.body.country,
         // countries : await countryModel.findById(country),
 
@@ -123,7 +123,7 @@ const setCity = async (req, res) => {
 const updateCity = async (req, res) => {
   const id  = req.params.id; 
   const  name  = req.body.name; 
-  const Describtion =req.body.Describtion;
+  const Description =req.body.Description;
     const image = await cloudinary.uploader.upload(req.file.path);
     
   
@@ -132,7 +132,7 @@ try{
     const updatedCity = await cityModel.findByIdAndUpdate(
       id,
       { name,
-        Describtion,
+        Description,
      image: {
         public_id: image.public_id,
         url: image.secure_url,

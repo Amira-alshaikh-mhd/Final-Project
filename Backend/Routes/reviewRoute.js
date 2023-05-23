@@ -9,11 +9,11 @@ router.get('/', getReviews)
 
 router.get('/:id', getReviewById)
 
-router.get("/byplaceName/:placeName", getReviewByPlaceName );
+router.get("/byplace/:id", getReviewByPlaceName );
 
 
 
-router.get("/byHostName/:hostName", getReviewsByHostName );
+router.get("/byHost/:id", getReviewsByHostName );
 
 
 

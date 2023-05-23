@@ -3,6 +3,7 @@ const cityModel = require ("../Models/cityModel")
 const typeModel = require ("../Models/typeModel")
 const cloudinary = require("cloudinary").v2;
 const path = require("path");
+const ReviewModel = require("../Models/reviewModel");
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -14,7 +15,7 @@ cloudinary.config({
 const getReviews = async (req, res) => {
 
     try {
-        const Reviews = await reviewModel.find();
+        const Reviews = await reviewModel.find().populate("userId");
        
         res.send(Reviews);
       } catch (error) {
@@ -41,61 +42,90 @@ const getReviewById = async (req, res) => {
 
 
 const getReviewByPlaceName = async (req, res) => {
-    try {
-       const placeName = req.params.placeName;
-       const review = await reviewModel.aggregate([
-         {
-           $lookup: {
-             from: "places",
-             localField: "placeId",
-             foreignField: "_id",
-             as: "placeId",
-           },
-         },
-         {
-           $unwind: "$placeId",
-         },
-         {
-           $match: {
-             "placeId.name": placeName,
-           },
-         },
-       ]);
-    
-       res.status(200).json(review);
-     } catch (err) {
-       res.json({ message: err });
+  
+    try{
+    const {id } = req.params
+    console.log(id)
+  
+    const review = await ReviewModel.find({ placeId: id }).populate("placeId").populate("userId");
+  
+    res.status(200).json(review);
     }
-}
+    catch(err){
+    res.json({ message: err });
+    }
+    };
+  
+//     try {
+//        const placeName = req.params.placeName;
+//        const review = await reviewModel.aggregate([
+//          {
+//            $lookup: {
+//              from: "places",
+//              localField: "placeId",
+//              foreignField: "_id",
+//              as: "placeId",
+//            },
+//          },
+//          {
+//            $unwind: "$placeId",
+//          },
+//          {
+//            $match: {
+//              "placeId.name": placeName,
+//            },
+//          },
+//        ]);
+    
+//        res.status(200).json(review);
+//      } catch (err) {
+//        res.json({ message: err });
+//     }
+// }
 
 
 // get by 
 const getReviewsByHostName = async (req, res) => {
-  try {
-     const hostName = req.params.hostName;
-     const review = await reviewModel.aggregate([
-       {
-         $lookup: {
-           from: "hosts",
-           localField: "hostId",
-           foreignField: "_id",
-           as: "hostId",
-         },
-       },
-       {
-         $unwind: "$hostId",
-       },
-       {
-         $match: {
-           "hostId.name": hostName,
-         },
-       },
-     ]);
+
+  try{
+    const {id } = req.params
+    console.log(id)
   
-     res.status(200).json(review);
-   } catch (err) {
-     res.json({ message: err });
-  }
+    const review = await ReviewModel.find({ hostId: id }).populate("hostId").populate("userId");
+  
+    res.status(200).json(review);
+    }
+    catch(err){
+    res.json({ message: err });
+    }
+
+
+  // try {
+
+  //    const hostName = req.params.hostName;
+  //    const review = await reviewModel.aggregate([
+  //      {
+  //        $lookup: {
+  //          from: "hosts",
+  //          localField: "hostId",
+  //          foreignField: "_id",
+  //          as: "hostId",
+  //        },
+  //      },
+  //      {
+  //        $unwind: "$hostId",
+  //      },
+  //      {
+  //        $match: {
+  //          "hostId.name": hostName,
+  //        },
+  //      },
+  //    ]);
+  
+  //    res.status(200).json(review);
+  //  } catch (err) {
+  //    res.json({ message: err });
+  // }
 }
 
 

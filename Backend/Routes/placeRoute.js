@@ -11,7 +11,7 @@ router.get('/', getPlaces)
 
 router.get('/:id', getPlaceById)
 
-router.get("/placesbyCityName/:cityName", getPlacesByCityName );
+router.get("/placesbyCity/:id", getPlacesByCityName );
 
 
 

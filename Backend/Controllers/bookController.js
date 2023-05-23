@@ -27,31 +27,44 @@ const getBookById = async (req, res) => {
 // get by host name
 
 const getBooksByHostName = async (req, res) => {
-    try {
-       const hostName = req.params.hostName;
-       const book = await bookModel.aggregate([
-         {
-           $lookup: {
-             from: "hosts",
-             localField: "hostId",
-             foreignField: "_id",
-             as: "hostId",
-           },
-         },
-         {
-           $unwind: "$hostId",
-         },
-         {
-           $match: {
-             "hostId.name": hostName,
-           },
-         },
-       ]);
-    
-       res.status(200).json(book);
-     } catch (err) {
-       res.json({ message: err });
+
+
+  try{
+    const {id } = req.params
+    console.log(id)
+  
+    const book = await bookModel.find({ hostId: id }).populate("hostId").populate("userId");
+  
+    res.status(200).json(book);
     }
+    catch(err){
+    res.json({ message: err });
+    }
+    // try {
+    //    const hostName = req.params.hostName;
+    //    const book = await bookModel.aggregate([
+    //      {
+    //        $lookup: {
+    //          from: "hosts",
+    //          localField: "hostId",
+    //          foreignField: "_id",
+    //          as: "hostId",
+    //        },
+    //      },
+    //      {
+    //        $unwind: "$hostId",
+    //      },
+    //      {
+    //        $match: {
+    //          "hostId.name": hostName,
+    //        },
+    //      },
+    //    ]);
+    
+    //    res.status(200).json(book);
+    //  } catch (err) {
+    //    res.json({ message: err });
+    // }
   }
 
 

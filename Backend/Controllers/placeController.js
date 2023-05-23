@@ -100,30 +100,16 @@ async function getPlacesByCityAndType(cityId, typeId, res) {
 
 
 const getPlacesByCityName = async (req, res) => {
-    try {
-       const cityName = req.params.cityName;
-       const place = await PlaceModel.aggregate([
-         {
-           $lookup: {
-             from: "cities",
-             localField: "cityId",
-             foreignField: "_id",
-             as: "cityId",
-           },
-         },
-         {
-           $unwind: "$cityId",
-         },
-         {
-           $match: {
-             "cityId.name": cityName,
-           },
-         },
-       ]);
-    
-       res.status(200).json(place);
-     } catch (err) {
-       res.json({ message: err });
+  try{
+    const {id } = req.params
+    console.log(id)
+  
+    const place = await PlaceModel.find({ cityId: id }).populate("cityId").populate("typeId");
+  
+    res.status(200).json(place);
+    }
+    catch(err){
+    res.json({ message: err });
     }
 }
 
