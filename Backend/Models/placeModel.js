@@ -38,10 +38,7 @@ const PlaceSchema =new mongoose.Schema({
         required:[true, "Please include a Type"]
     },
 
-    rating: {
-        type: Number,
-        default: 0,
-      },
+   
 
 },
 

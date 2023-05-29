@@ -94,7 +94,7 @@ const getReviewsByHostName = async (req, res) => {
     const review = await ReviewModel.find({ hostId: id }).populate("hostId").populate("userId");
   
     res.status(200).json(review);
-    }
+    } 
     catch(err){
     res.json({ message: err });
     }
@@ -195,7 +195,7 @@ const updateReview = async (req, res) => {
   
 try{
   
-    const updatedReview = await PlaceModel.findByIdAndUpdate(
+    const updatedReview = await ReviewModel.findByIdAndUpdate(
       id,
       { comment,
         rating,

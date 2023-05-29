@@ -170,7 +170,6 @@ const setplace = async (req, res) => {
         name: req.body.name,
         Description: req.body.Description,
         Address : req.body.Address,
-        rating : req.body.rating,
         cityId : req.body.cityId,
         typeId : req.body.typeId,
         rating : req.body.rating,
@@ -198,7 +197,6 @@ const updatePlace = async (req, res) => {
   const  name  = req.body.name; 
   const Description =req.body.Description;
   const Address = req.body.Address;
-  const rating = req.body.rating;
     // const image = await cloudinary.uploader.upload(req.file.path);
     let images = [];
     if (req.files && req.files.length > 0) {
@@ -219,7 +217,6 @@ try{
       { name,
         Description,
         Address,
-        rating,
         image: images,
     },
       { new: true }

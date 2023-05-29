@@ -61,8 +61,13 @@ const login = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: '5h' }
     );
-
-    return res.status(200).json({ token });
+      
+    return res.status(200).json({ 
+      user: user._id,
+      name: user.name,
+      token: token,
+    role: user.role
+   });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: 'Internal server error' });
